@@ -3,23 +3,23 @@
 import sys
 from my_matrix import *
 
-epsilon = 1e-2
+epsilon = 1e-6
 
 
 def apply_BC(x, n_x, n_y):
     i = 0
     while i < n_x:
-        alpha=index_1d(i,0,n_x)
-        x[alpha] = 0.0
+        alpha = index_1d(i, 0, n_x)
+        x[alpha] = 1.0
         alpha = index_1d(i, n_y-1, n_x)
-        x[alpha] = 0.0
+        x[alpha] = 1.0
         i = i + 1
     j = 0
     while j < n_y:
-        alpha = index_1d(j, 0, n_x)
-        x[alpha] = 0.0
-        alpha = index_1d(i, n_x - 1, n_x)
-        x[alpha] = 0.0
+        alpha = index_1d(0, j, n_x)
+        x[alpha] = 1.0
+        alpha = index_1d(n_x-1, j, n_x)
+        x[alpha] = 1.0
         j = j + 1
     return x
 
@@ -55,7 +55,7 @@ def gauss_seidel_withBC(a, b, n_x, n_y):
 
                 apply_BC(x, n_x, n_y)
                 nn = norm(sub_vec(x, x_n))
-                print >> sys.stderr, nn
+                # print >> sys.stderr, nn
             return x
 
 
@@ -68,9 +68,10 @@ def index_2d(alpha, n_x):
 
 
 def Q(i, j, x_max, y_max, delta):
-    x_dist = math.exp(-pow((i * delta - x_max / 2.0), 2) / (1.0 * delta * delta))
-    y_dist = math.exp(-pow((j * delta - x_max / 2.0), 2) / (1.0 * delta * delta))
-    return x_dist*y_dist
+    if abs(2*i*delta) < 1 and abs(2*j*delta) < 1:
+        return 1
+    else:
+        return 0
 
 
 C0 = 1.6e-19  # SI Units C
@@ -79,8 +80,10 @@ epsilon0 = 8.85e-12  # SI units
 
 chi = C0/(phi0*epsilon0)
 
-x_max = 10.0
-y_max = 10.0
+x_max = 5.0
+y_max = 5.0
+x_min = -5.0
+y_min = -5.0
 
 n_x = 20
 n_y = 20
@@ -88,7 +91,7 @@ N = n_x*n_y
 
 #  For this delta to be the same in x and y,
 #  n_x/n_y must be the same as x_max/y_max
-delta = x_max/float(n_x)
+delta = (x_max-x_min)/float(n_x)
 
 A = mat(N, N)
 b = vec(N)
@@ -179,7 +182,7 @@ while i < n_x - 1:
     i = i + 1
 
 
-phi = gauss_seidel_withBC(A ,b, n_x, n_y)
+phi = gauss_seidel_withBC(A, b, n_x, n_y)
 
 alpha = 0
 

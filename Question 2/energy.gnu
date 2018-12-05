@@ -12,4 +12,4 @@ set ytics 1,2
 set xlabel "n"
 set ylabel "{E_n} (h{/Symbol w}/2 {/Symbol p})"
 
-plot "C:/Users/dcrowder/PycharmProjects/Final/Question 2/qharmonic.out" u 1:3 t "" w lp
+plot "/home/dcrowder/PycharmProjects/Final/Question 2/finite_well.out" u 1:3 t "" w p
