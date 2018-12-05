@@ -2,14 +2,14 @@
 
 from my_matrix import *
 
-class md_box:
 
+class md_box:
     def __name__(self):
         self.name = 'md_box'
         return self.name
 
-    def __init__(self, Lx, Ly=None, Lz=None):
-        "The constructor for md_box"
+    def __init__(self, Lx, Ly = None, Lz = None):
+        """The constructor for md_box"""
 
         if isinstance(Lx, float):
             self.box = mat(3, 3)
@@ -31,6 +31,7 @@ class md_box:
         return self.box
 
 # Function that returns the difference vector with periodic boundaries
+
 
 def dx(x1, x2, b):
     if isinstance(x1, vec) and isinstance(x2, vec) and isinstance(b, md_box):

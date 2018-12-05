@@ -53,23 +53,26 @@ class md_system:
 
             V = vec(3)
             V[0] = vx
-            V[0] = vx
-            V[0] = vx
+            V[0] = vy
+            V[0] = vz
 
             self.atoms[count].V(V)
             count += 1
 
     def __str__(self):
         b = self.box.get()
-        s1 = 'CRYST1%9.3f%9.3f%9.3f%7.2f%7.2f%7.2f%11s%4d\n' % (self.sigma*b[0][0], self.sigma*b[1][1], self.sigma*b[2][2], 90.0, 90.0, 90.0, " ", 0)
+        s1 = 'CRYST1%9.3f%9.3f%9.3f%7.2f%7.2f%7.2f%11s%4d\n' % (self.sigma*b[0][0], self.sigma*b[1][1], self.sigma*b[2][2], 90.0, 90.0, 90.0, "", 0)
         name = "Ar"
         s = ""
         count = 0
         while count < self.N:
-            s += 'ATOM %5d %4s%c%3s %c%4d%c  %8.3f%8.3f%8.3f%6.2f%6.2f    %-4s%2s%2s\n' % (count, name, ' ', "MDX", ' ', 1, ' ', self.sigma*self.atoms[count].X()[0], self.sigma*self.atoms[count].X()[1], self.sigma*self.atoms[count].X()[2], 1.0, 0.0, "0", name, "")
-            count += 1
-            s += "END"
-            return s1 + s
+            s = s + 'ATOM  %5d %4s%c%3s %c%4d%c   %8.3f%8.3f%8.3f%6.2f%6.2f      %-4s%2s%2s\n' % (
+                count, name, ' ', "MDX", ' ', 1, ' ', self.sigma * self.atoms[count].X()[0],
+                self.sigma * self.atoms[count].X()[1], self.sigma * self.atoms[count].X()[2], 1.0, 0.0, "0", name, " ")
+            count = count + 1
+        s = s + "END"
+        return s1 + s
+
 
 def Apply_BC(s):
     Lx = s.box.get()[0][0]
