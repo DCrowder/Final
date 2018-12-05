@@ -44,6 +44,19 @@ class md_system:
             z = random.uniform(0.0, Lz)
             a = md_atom(x, y, z)
             self.atoms[count] = a
+            
+            mu = math.sqrt(self.N*8.31e-3*flag/self.mass)
+
+            vx = random.gauss(mu, 1.0)
+            vy = random.gauss(mu, 1.0)
+            vz = random.gauss(mu, 1.0)
+
+            V = vec(3)
+            V[0] = vx
+            V[0] = vx
+            V[0] = vx
+
+            self.atoms[count].V(V)
             count += 1
 
     def __str__(self):
@@ -65,9 +78,9 @@ def Apply_BC(s):
 
     i = 0
     while i < s.N:
-        x = s.atoms[i].X()[0]
-        y = s.atoms[i].X()[1]
-        z = s.atoms[i].X()[2]
+        x = s.atoms[i].X()[0] % Lx
+        y = s.atoms[i].X()[1] % Ly
+        z = s.atoms[i].X()[2] % Lz
 
         if x < 0:
             x += Lx

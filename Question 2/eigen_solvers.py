@@ -4,7 +4,7 @@ import sys
 
 from my_matrix import *
 
-epsilon = 1e-2  # default e-6
+epsilon = 1e-6  # default e-6
 
 
 def ortho_basis(A):
