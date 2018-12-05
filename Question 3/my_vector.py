@@ -6,6 +6,7 @@ negative_inf = -1e20
 
 # Definition of vectors
 
+
 class vec:
     def __name__(self):
         self.name='vec'
@@ -63,6 +64,7 @@ class vec:
         else:
             return self.v[i]
 
+
 def add_vec(a,b):
     if isinstance(a,vec) and isinstance(b,vec):
         if a.get_dim()==b.get_dim():
@@ -72,6 +74,7 @@ def add_vec(a,b):
             print 'cannot add vectors with dimensions %d and %d' % (a.get_dim(),b.get_dim())
             exit(0)
 
+
 def sub_vec(a,b):
     if isinstance(a,vec) and isinstance(b,vec):
         if a.get_dim() == b.get_dim():
@@ -80,6 +83,7 @@ def sub_vec(a,b):
         else:
             print 'cannot subtract vectors with dimensions %d and %d' % (a.get_dim(), b.get_dim())
             exit(0)
+
 
 def mult_vec(a,b):
     if isinstance(a,float) and isinstance(b,vec):
@@ -95,6 +99,7 @@ def mult_vec(a,b):
         c=[b*a[i] for i in range(a.get_dim())]
         return vec(c)
 
+
 def div_vec(a,b):
     if isinstance(a,vec) and isinstance(b,float):
         c = [a[i]/b for i in range(a.get_dim())]
@@ -103,10 +108,11 @@ def div_vec(a,b):
         c = [a[i]/b for i in range(a.get_dim())]
         return vec(c)
 
+
 def norm(a,t=None):
     if isinstance(a,vec):
         if t is None:
-            s = 0.0;
+            s = 0.0
             for x in a.v:
                 s = s + x*x
             return math.sqrt(s)
@@ -121,6 +127,7 @@ def norm(a,t=None):
                 if x >= big:
                     big = x
                 return big
+
 
 def inner(a,b):
     if isinstance(a,vec) and isinstance(b,vec):
